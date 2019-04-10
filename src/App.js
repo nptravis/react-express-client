@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { getInitialData } from './actions/initialData'
 import { connect } from 'react-redux';
-import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import styled from 'styled-components';
 import BigNavbar from './containers/BigNavbar';
 import Footer from './containers/Footer';
