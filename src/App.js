@@ -1,28 +1,61 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { getInitialData } from './actions/initialData'
+import { connect } from 'react-redux';
+import {BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom'
+import styled from 'styled-components';
+import BigNavbar from './containers/BigNavbar';
+import Footer from './containers/Footer';
+import Homepage from './containers/Homepage'
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 5px;
+
+  & > header {
+    flex: 1 1 10%;
+  }
+  & > main {
+    flex: 1 1 70%;
+  }
+  & > footer {
+    flex: 1 1 20%;
+  }
+
+`
 class App extends Component {
+
+  componentDidMount(){
+    this.props.dispatch(getInitialData());
+  }
   render() {
+    const isAuthenticated = this.props.session.isAuthenticated;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <Container>
+        <header>
+         <Route path="/" component={BigNavbar} />
+          
         </header>
-      </div>
+        <main>
+           <Route exact={true} path="/" component={Homepage} />
+        </main>
+        <footer>
+          <Route path="/" component={Footer} /> 
+        </footer>
+        {/** <Route exact={true} path="/" render={ 
+          isAuthenticated ? showUserHome : showGuestHome} />**/}
+      </Container>
     );
   }
 }
 
-export default App;
+const mapState = state => {
+  return {
+    session: state.sessionData
+  }
+}
+
+export default connect(mapState)(App);
