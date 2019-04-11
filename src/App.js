@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import { getInitialData } from './actions/initialData'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import styled from 'styled-components';
-import BigNavbar from './containers/BigNavbar';
-import Footer from './containers/Footer';
+import styled from 'styled-components'
+import Navbar from './containers/Navbar'
+import Footer from './containers/Footer'
 import Homepage from './containers/Homepage'
+import ProductIndex from './containers/ProductIndex'
+import { withRouter } from 'react-router-dom'
 
 const Container = styled.div`
   display: flex;
@@ -23,31 +25,29 @@ const Container = styled.div`
   & > footer {
     flex: 1 1 20%;
   }
-
 `
 class App extends Component {
-
-  componentDidMount(){
-    this.props.dispatch(getInitialData());
+  componentDidMount() {
+    this.props.dispatch(getInitialData())
   }
   render() {
-    const isAuthenticated = this.props.session.isAuthenticated;
+    const isAuthenticated = this.props.session.isAuthenticated
     return (
       <Container>
         <header>
-         <Route path="/" component={BigNavbar} />
-          
+          <Route path="/" component={Navbar} />
         </header>
         <main>
-           <Route exact={true} path="/" component={Homepage} />
+          <Route exact={true} path="/" component={Homepage} />
+          <Route exact={true} path="/product-index" component={ProductIndex} />
         </main>
         <footer>
-          <Route path="/" component={Footer} /> 
+          <Route path="/" component={Footer} />
         </footer>
         {/** <Route exact={true} path="/" render={ 
           isAuthenticated ? showUserHome : showGuestHome} />**/}
       </Container>
-    );
+    )
   }
 }
 
@@ -57,4 +57,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(App);
+export default withRouter(connect(mapState)(App))
