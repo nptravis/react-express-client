@@ -28,13 +28,6 @@ class ProductIndex extends React.Component {
 	}
 
 	handleClickNumber = e => {
-		let liElement = e.currentTarget.parentElement
-		let list = liElement.parentElement.children
-		for (let i = 0; i < list.length; i++) {
-			list[i].classList.remove('active')
-		}
-
-		liElement.classList.add('active')
 		const end = this.state.productsPerPage * parseInt(e.target.innerText, 10)
 		const start = end - this.state.productsPerPage
 		this.setState({

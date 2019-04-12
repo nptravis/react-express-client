@@ -38,7 +38,7 @@ const NumberCircle = styled.div`
 
 export const ProductPagination = props => {
 	const numberOfPages = Math.ceil(props.total / props.productsPerPage)
-	const activeIndex = props.currentRange
+	const activePage = Math.floor(props.currentRange[0] / props.productsPerPage)
 	return (
 		<Container>
 			<Pagination>
@@ -48,7 +48,10 @@ export const ProductPagination = props => {
 					.fill(1)
 					.map((n, index) => {
 						return (
-							<Pagination.Item className={index === activeIndex ? } onClick={props.handleClickNumber}>
+							<Pagination.Item
+								className={index === activePage ? 'active' : ''}
+								onClick={props.handleClickNumber}
+							>
 								{index + n}
 							</Pagination.Item>
 						)
