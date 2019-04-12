@@ -51,6 +51,7 @@ export const ProductPagination = props => {
 							<Pagination.Item
 								className={index === activePage ? 'active' : ''}
 								onClick={props.handleClickNumber}
+								key={index}
 							>
 								{index + n}
 							</Pagination.Item>

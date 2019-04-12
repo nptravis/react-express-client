@@ -5,6 +5,7 @@ import { getAll } from '../selectors'
 import SearchProducts from '../components/SearchProducts'
 import ProductCard from '../components/ProductCard'
 import { ProductPagination } from '../components/ProductPagination'
+import { getDepartments } from '../actions/resourceActions'
 
 const Container = styled.div`
 	display: flex;
@@ -25,6 +26,10 @@ class ProductIndex extends React.Component {
 	state = {
 		currentRange: [0, 9],
 		productsPerPage: 12
+	}
+
+	componentDidMount() {
+		this.props.dispatch(getDepartments())
 	}
 
 	handleClickNumber = e => {
@@ -83,7 +88,7 @@ class ProductIndex extends React.Component {
 		return (
 			<Container>
 				<Child>
-					<SearchProducts />
+					<SearchProducts departments={this.props.departments} />
 				</Child>
 
 				<Child>
@@ -110,7 +115,8 @@ class ProductIndex extends React.Component {
 
 const mapState = state => {
 	return {
-		products: getAll(state.initialData.products)
+		products: getAll(state.initialData.products),
+		departments: getAll(state.cacheData.departments)
 	}
 }
 

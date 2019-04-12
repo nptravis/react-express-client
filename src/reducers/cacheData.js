@@ -10,9 +10,9 @@ export default function cacheData(
 		case 'LOADED_DEPARTMENTS':
 			let newDepartments = { ...state.departemnts }
 			action.payload.map(dept => {
-				newDepartments[dept.id] = dept
+				newDepartments[dept.department_id] = dept
 			})
-			return { ...state, departemnts: newDepartments }
+			return { ...state, departments: newDepartments }
 		default:
 			return state
 	}

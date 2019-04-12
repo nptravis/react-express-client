@@ -4,7 +4,7 @@ export function getDepartments() {
 	return function(dispatch) {
 		dispatch({ type: 'LOADING_DEPARTMENTS' })
 
-		return fetch(baseUrl + `/departments`, {
+		return fetch(baseUrl + `/department`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
