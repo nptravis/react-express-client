@@ -37,29 +37,23 @@ const NumberCircle = styled.div`
 `
 
 export const ProductPagination = props => {
-	const createPages = num => {
-		let pages = []
-		for (let i = 1; i <= num; i++) {
-			pages.push(i)
-		}
-		return pages
-	}
-
 	const numberOfPages = Math.ceil(props.total / props.productsPerPage)
-
+	const activeIndex = props.currentRange
 	return (
 		<Container>
 			<Pagination>
 				<Pagination.First onClick={props.handleToStart} />
 				<Pagination.Prev onClick={props.handlePreviousPage} />
-				{createPages(numberOfPages).map(num => {
-					return (
-						<Pagination.Item onClick={props.handleClickNumber}>
-							{num}
-						</Pagination.Item>
-					)
-				})}
-
+				{Array(numberOfPages)
+					.fill(1)
+					.map((n, index) => {
+						return (
+							<Pagination.Item className={index === activeIndex ? } onClick={props.handleClickNumber}>
+								{index + n}
+							</Pagination.Item>
+						)
+					})}
+				<Pagination.Ellipsis />
 				<Pagination.Next onClick={props.handleNextPage} />
 				<Pagination.Last onClick={props.handleToEnd} />
 			</Pagination>
