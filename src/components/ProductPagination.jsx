@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { docColors } from '../constants'
+import Pagination from 'react-bootstrap/Pagination'
 
 const Container = styled.div``
 
 const Ul = styled.ul`
 	list-style: none;
+	margin: 20px auto;
 
 	& > li {
 		display: inline-block;
@@ -24,31 +26,60 @@ const NumberCircle = styled.div`
 	text-align: center;
 
 	border-radius: 50%;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&.selectedNumber {
+		background-color: ${docColors.red};
+	}
 `
 
-class Pagination extends React.Component {
-	render() {
-		let NumberOfPages = this.props.total / 9
-		return (
-			<Container>
-				<Ul>
-					<li>
-						<NumberCircle>1</NumberCircle>
-					</li>
-					<li>
-						<NumberCircle>2</NumberCircle>
-					</li>
-					<li>
-						<NumberCircle>3</NumberCircle>
-					</li>
-				</Ul>
-			</Container>
-		)
+export const ProductPagination = props => {
+	const createPages = num => {
+		let pages = []
+		for (let i = 1; i <= num; i++) {
+			pages.push(i)
+		}
+		return pages
 	}
+
+	const numberOfPages = Math.ceil(props.total / props.productsPerPage)
+
+	return (
+		<Container>
+			<Pagination>
+				<Pagination.First onClick={props.handleToStart} />
+				<Pagination.Prev onClick={props.handlePreviousPage} />
+				{createPages(numberOfPages).map(num => {
+					return (
+						<Pagination.Item onClick={props.handleClickNumber}>
+							{num}
+						</Pagination.Item>
+					)
+				})}
+
+				<Pagination.Next onClick={props.handleNextPage} />
+				<Pagination.Last onClick={props.handleToEnd} />
+			</Pagination>
+
+			{/*<Ul>
+				{createPages(numberOfPages).map(num => {
+					return (
+						<li>
+							<NumberCircle onClick={this.handleClickNumber}>
+								{num}
+							</NumberCircle>
+						</li>
+					)
+				})}
+			</Ul>*/}
+		</Container>
+	)
 }
 
-Pagination.proptypes = {
-	total: PropTypes.number.isRequired
+ProductPagination.proptypes = {
+	total: PropTypes.number.isRequired,
+	productsPerPage: PropTypes.number.isRequired
 }
-
-export default Pagination

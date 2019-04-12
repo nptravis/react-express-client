@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getAll } from '../selectors'
 import SearchProducts from '../components/SearchProducts'
 import ProductCard from '../components/ProductCard'
-import ProductPagination from '../components/ProductPagination'
+import { ProductPagination } from '../components/ProductPagination'
 
 const Container = styled.div`
 	display: flex;
@@ -22,9 +22,64 @@ const Child = styled.div`
 	}
 `
 class ProductIndex extends React.Component {
+	state = {
+		currentRange: [0, 9],
+		productsPerPage: 12
+	}
+
+	handleClickNumber = e => {
+		const end = this.state.productsPerPage * parseInt(e.target.innerText, 10)
+		const start = end - this.state.productsPerPage
+		this.setState({
+			currentRange: [start, end]
+		})
+	}
+
+	handleNextPage = e => {
+		if (this.state.currentRange[1] < this.props.products.length)
+			this.setState({
+				currentRange: this.state.currentRange.map(
+					num => num + this.state.productsPerPage
+				)
+			})
+	}
+
+	handlePreviousPage = e => {
+		if (this.state.currentRange[0] > 0) {
+			this.setState({
+				currentRange: this.state.currentRange.map(
+					num => num - this.state.productsPerPage
+				)
+			})
+		}
+	}
+
+	handleToStart = e => {
+		this.setState({
+			currentRange: [0, this.state.productsPerPage]
+		})
+	}
+
+	handleToEnd = e => {
+		const NumOfproductsOnLastPage =
+			this.props.products.length % this.state.productsPerPage
+		const lastStart = this.props.products.length - NumOfproductsOnLastPage
+		const lastEnd =
+			this.props.products.length +
+			this.state.productsPerPage -
+			NumOfproductsOnLastPage
+		this.setState({
+			currentRange: [lastStart, lastEnd]
+		})
+	}
+
 	render() {
 		const rangeOfProducts = [0, 9]
-		const products = getAll(this.props.products)
+
+		const currentRange = this.props.products.slice(
+			this.state.currentRange[0],
+			this.state.currentRange[1]
+		)
 		return (
 			<Container>
 				<Child>
@@ -32,9 +87,17 @@ class ProductIndex extends React.Component {
 				</Child>
 
 				<Child>
-					<ProductPagination total={products.length} />
+					<ProductPagination
+						total={this.props.products.length}
+						productsPerPage={this.state.productsPerPage}
+						handleClickNumber={this.handleClickNumber}
+						handleNextPage={this.handleNextPage}
+						handlePreviousPage={this.handlePreviousPage}
+						handleToStart={this.handleToStart}
+						handleToEnd={this.handleToEnd}
+					/>
 					<div>
-						{products.map(product => {
+						{currentRange.map(product => {
 							return <ProductCard product={product} key={product.product_id} />
 						})}
 					</div>
@@ -46,7 +109,7 @@ class ProductIndex extends React.Component {
 
 const mapState = state => {
 	return {
-		products: state.initialData.products
+		products: getAll(state.initialData.products)
 	}
 }
 
