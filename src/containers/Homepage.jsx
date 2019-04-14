@@ -121,8 +121,8 @@ class Homepage extends Component {
 
 const mapState = state => {
 	return {
-		products: state.initialData.products,
-		loading: state.initialData.loading
+		products: state.resourceData.products,
+		loading: state.resourceData.loading
 	}
 }
 

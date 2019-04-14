@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { getInitialData } from './actions/initialData'
+import { getProducts, getProductCategories } from './actions/resourceActions'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
@@ -28,7 +28,8 @@ const Container = styled.div`
 `
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(getInitialData())
+    this.props.dispatch(getProducts())
+    this.props.dispatch(getProductCategories())
   }
   render() {
     const isAuthenticated = this.props.session.isAuthenticated

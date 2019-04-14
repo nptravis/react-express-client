@@ -24,6 +24,7 @@ const Child = styled.div`
 `
 class ProductIndex extends React.Component {
 	state = {
+		products: this.props.products,
 		currentRange: [0, 9],
 		productsPerPage: 12
 	}
@@ -41,7 +42,7 @@ class ProductIndex extends React.Component {
 	}
 
 	handleNextPage = e => {
-		if (this.state.currentRange[1] < this.props.products.length)
+		if (this.state.currentRange[1] < this.state.products.length)
 			this.setState({
 				currentRange: this.state.currentRange.map(
 					num => num + this.state.productsPerPage
@@ -67,10 +68,10 @@ class ProductIndex extends React.Component {
 
 	handleToEnd = e => {
 		const NumOfproductsOnLastPage =
-			this.props.products.length % this.state.productsPerPage
-		const lastStart = this.props.products.length - NumOfproductsOnLastPage
+			this.state.products.length % this.state.productsPerPage
+		const lastStart = this.state.products.length - NumOfproductsOnLastPage
 		const lastEnd =
-			this.props.products.length +
+			this.state.products.length +
 			this.state.productsPerPage -
 			NumOfproductsOnLastPage
 		this.setState({
@@ -78,17 +79,33 @@ class ProductIndex extends React.Component {
 		})
 	}
 
+	filterProducts = categoryIds => {
+		const productIds = []
+
+		this.props.productCategories.forEach(prodCat => {
+			if (categoryIds.includes(prodCat.category_id)) {
+				productIds.push(prodCat.product_id)
+			}
+		})
+
+		this.setState({
+			products: this.props.products.filter(product => {
+				return productIds.includes(product.product_id)
+			})
+		})
+	}
+
 	render() {
 		const rangeOfProducts = [0, 9]
 
-		const currentRange = this.props.products.slice(
+		const currentRange = this.state.products.slice(
 			this.state.currentRange[0],
 			this.state.currentRange[1]
 		)
 		return (
 			<Container>
 				<Child>
-					<SearchProducts departments={this.props.departments} />
+					<SearchProducts filterProducts={this.filterProducts} />
 				</Child>
 
 				<Child>
@@ -115,8 +132,10 @@ class ProductIndex extends React.Component {
 
 const mapState = state => {
 	return {
-		products: getAll(state.initialData.products),
-		departments: getAll(state.cacheData.departments)
+		products: getAll(state.resourceData.products),
+		departments: getAll(state.resourceData.departments),
+		categories: getAll(state.resourceData.categories),
+		productCategories: state.resourceData.productCategories
 	}
 }
 
