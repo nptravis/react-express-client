@@ -57,7 +57,6 @@ export const ProductPagination = props => {
 							</Pagination.Item>
 						)
 					})}
-				<Pagination.Ellipsis />
 				<Pagination.Next onClick={props.handleNextPage} />
 				<Pagination.Last onClick={props.handleToEnd} />
 			</Pagination>

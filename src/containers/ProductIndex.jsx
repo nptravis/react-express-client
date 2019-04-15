@@ -79,7 +79,7 @@ class ProductIndex extends React.Component {
 		})
 	}
 
-	filterProducts = categoryIds => {
+	filterProducts = (categoryIds, searchTerm = '') => {
 		const productIds = []
 
 		this.props.productCategories.forEach(prodCat => {
@@ -88,11 +88,22 @@ class ProductIndex extends React.Component {
 			}
 		})
 
-		this.setState({
-			products: this.props.products.filter(product => {
-				return productIds.includes(product.product_id)
+		if (searchTerm !== '') {
+			this.setState({
+				products: this.props.products.filter(product => {
+					return (
+						productIds.includes(product.product_id) &&
+						product.name.includes(searchTerm)
+					)
+				})
 			})
-		})
+		} else {
+			this.setState({
+				products: this.props.products.filter(product => {
+					return productIds.includes(product.product_id)
+				})
+			})
+		}
 	}
 
 	render() {
@@ -110,7 +121,7 @@ class ProductIndex extends React.Component {
 
 				<Child>
 					<ProductPagination
-						total={this.props.products.length}
+						total={this.state.products.length}
 						productsPerPage={this.state.productsPerPage}
 						handleClickNumber={this.handleClickNumber}
 						handleNextPage={this.handleNextPage}
