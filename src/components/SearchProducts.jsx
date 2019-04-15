@@ -4,8 +4,56 @@ import { connect } from 'react-redux'
 import { getAll } from '../selectors'
 import { getCategories } from '../actions/resourceActions'
 import Button from 'react-bootstrap/Button'
+import { textColors, docColors } from '../constants'
 
-const Container = styled.div``
+const Container = styled.div`
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 90%;
+	margin 54px auto;
+	background-color: #fff;
+`
+
+const Child = styled.div`
+	width: 100%;
+	text-align: center;
+
+	& > h2 {
+		text-align: left;
+		margin-left: 5%;
+		color: ${textColors.grey};
+	}
+
+	&:nth-child(1) {
+	}
+
+	&:nth-child(2) {
+		margin-top: 20px;
+	}
+
+	&:nth-child(3) {
+		margin-top: 20px;
+	}
+
+	& > input {
+		width: 90%;
+	}
+
+	& > button {
+		display: inline-block;
+		width: 90%;
+		margin-bottom: 5px;
+		color: ${textColors.grey};
+		background-color: ${docColors.lightGrey};
+
+		&.active {
+			background-color: ${docColors.red};
+			color: #fff;
+		}
+	}
+`
 
 class SearchProducts extends Component {
 	state = {
@@ -73,42 +121,57 @@ class SearchProducts extends Component {
 	}
 
 	render() {
+		let display = 'none'
+		if (this.state.selectedDepartmentId) {
+			display = 'block'
+		}
 		return (
 			<Container>
-				<input type="text" onChange={this.handleSearchChange} />
-				{this.props.departments.map(dept => {
-					return (
-						<Button
-							key={dept.department_id}
-							data-deptid={dept.department_id}
-							onClick={this.handleDeptClick}
-							className={
-								this.state.selectedDepartmentId === dept.department_id
-									? 'active'
-									: ''
-							}
-						>
-							{dept.name}
-						</Button>
-					)
-				})}
-
-				{this.state.categories.map(category => {
-					return (
-						<Button
-							key={category.category_id}
-							data-categoryid={category.category_id}
-							onClick={this.handleCategoryClick}
-							className={
-								this.state.selectedCategoryId === category.category_id
-									? 'active'
-									: ''
-							}
-						>
-							{category.name}
-						</Button>
-					)
-				})}
+				<Child>
+					<input
+						type="text"
+						onChange={this.handleSearchChange}
+						placeholder="Search"
+					/>
+				</Child>
+				<Child>
+					<h2>Department</h2>
+					{this.props.departments.map(dept => {
+						return (
+							<button
+								key={dept.department_id}
+								data-deptid={dept.department_id}
+								onClick={this.handleDeptClick}
+								className={
+									this.state.selectedDepartmentId === dept.department_id
+										? 'active'
+										: ''
+								}
+							>
+								{dept.name.toUpperCase()}
+							</button>
+						)
+					})}
+				</Child>
+				<Child>
+					<h2 style={{ display: display }}>Category</h2>
+					{this.state.categories.map(category => {
+						return (
+							<button
+								key={category.category_id}
+								data-categoryid={category.category_id}
+								onClick={this.handleCategoryClick}
+								className={
+									this.state.selectedCategoryId === category.category_id
+										? 'active'
+										: ''
+								}
+							>
+								{category.name.toUpperCase()}
+							</button>
+						)
+					})}
+				</Child>
 			</Container>
 		)
 	}

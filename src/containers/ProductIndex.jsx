@@ -9,11 +9,13 @@ import { getDepartments } from '../actions/resourceActions'
 
 const Container = styled.div`
 	display: flex;
+	height: 100%;
 `
 const Child = styled.div`
 	&:nth-child(1) {
 		flex: 1;
 	}
+
 	&:nth-child(2) {
 		flex: 3;
 		& > div {

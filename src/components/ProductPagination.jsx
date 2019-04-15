@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 import { docColors } from '../constants'
 import Pagination from 'react-bootstrap/Pagination'
 
-const Container = styled.div``
+const Container = styled.div`
+	display: flex;
+	justify-content: center;
+`
 
 const Ul = styled.ul`
 	list-style: none;

@@ -1,8 +1,11 @@
-body {
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
@@ -29,7 +32,8 @@ h4 {
 	color: #2e2e2e;
 }
 
-p, span {
+p,
+span {
 	font-family: OpenSans;
 	font-size: 16px;
 	color: #6c6c6c;

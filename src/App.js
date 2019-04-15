@@ -9,12 +9,14 @@ import Footer from './containers/Footer'
 import Homepage from './containers/Homepage'
 import ProductIndex from './containers/ProductIndex'
 import { withRouter } from 'react-router-dom'
+import { docColors } from './constants'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin: 5px;
+  background-color: ${docColors.lightGrey};
+  height: 100%;
 
   & > header {
     flex: 1 1 10%;
