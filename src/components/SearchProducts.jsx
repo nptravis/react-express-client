@@ -5,14 +5,14 @@ import { getAll } from '../selectors'
 import { getCategories } from '../actions/resourceActions'
 import Button from 'react-bootstrap/Button'
 import { textColors, docColors } from '../constants'
+import { LargeButton } from './ComponentLibrary'
 
 const Container = styled.div`
-	border: 1px solid black;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	width: 90%;
-	margin 54px auto;
+	margin: 65px auto;
 	background-color: #fff;
 `
 
@@ -39,6 +39,7 @@ const Child = styled.div`
 
 	& > input {
 		width: 90%;
+		margin-top: 5%;
 	}
 
 	& > button {

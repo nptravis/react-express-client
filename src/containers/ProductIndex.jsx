@@ -5,7 +5,13 @@ import { getAll } from '../selectors'
 import SearchProducts from '../components/SearchProducts'
 import ProductCard from '../components/ProductCard'
 import { ProductPagination } from '../components/ProductPagination'
-import { getDepartments } from '../actions/resourceActions'
+import {
+	getDepartments,
+	getAttributes,
+	getProductAttributes,
+	getAttributeValues,
+	getCategories
+} from '../actions/resourceActions'
 
 const Container = styled.div`
 	display: flex;
@@ -28,11 +34,15 @@ class ProductIndex extends React.Component {
 	state = {
 		products: this.props.products,
 		currentRange: [0, 9],
-		productsPerPage: 12
+		productsPerPage: 9
 	}
 
 	componentDidMount() {
 		this.props.dispatch(getDepartments())
+		this.props.dispatch(getAttributes())
+		this.props.dispatch(getProductAttributes())
+		this.props.dispatch(getAttributeValues())
+		this.props.dispatch(getCategories())
 	}
 
 	handleClickNumber = e => {
@@ -97,13 +107,15 @@ class ProductIndex extends React.Component {
 						productIds.includes(product.product_id) &&
 						product.name.includes(searchTerm)
 					)
-				})
+				}),
+				currentRange: [0, 9]
 			})
 		} else {
 			this.setState({
 				products: this.props.products.filter(product => {
 					return productIds.includes(product.product_id)
-				})
+				}),
+				currentRange: [0, 9]
 			})
 		}
 	}

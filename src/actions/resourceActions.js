@@ -63,6 +63,48 @@ export function getProducts() {
 	}
 }
 
+export function getAttributes() {
+	return function(dispatch) {
+		dispatch({ type: 'LOADING_ATTRIBUTES' })
+
+		return fetch(baseUrl + `/api/attribute`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(response => response.json())
+			.then(data => {
+				dispatch({ type: 'LOADED_ATTRIBUTES', payload: data })
+			})
+			.catch(err => {
+				console.log('ERROR FETCHING DATA: ', err)
+			})
+	}
+}
+
+export function getAttributeValues() {
+	return function(dispatch) {
+		dispatch({ type: 'LOADING_ATTRIBUTE_VALUES' })
+
+		return fetch(baseUrl + `/api/attribute_value`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(response => response.json())
+			.then(data => {
+				dispatch({ type: 'LOADED_ATTRIBUTE_VALUES', payload: data })
+			})
+			.catch(err => {
+				console.log('ERROR FETCHING DATA: ', err)
+			})
+	}
+}
+
 export function getProductAttributes() {
 	return function(dispatch) {
 		dispatch({ type: 'LOADING_PRODUCT_ATTRIBUTES' })

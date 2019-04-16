@@ -3,7 +3,10 @@ export default function resourceData(
 		loading: true,
 		departments: {},
 		categories: {},
-		products: {}
+		products: {},
+		productAttributes: [],
+		attr: {},
+		attributeValues: []
 	},
 	action
 ) {
@@ -20,6 +23,18 @@ export default function resourceData(
 			return { ...state, loading: true }
 		case 'LOADED_PRODUCT_ATTRIBUTES':
 			return { ...state, productAttributes: action.payload, loading: false }
+		case 'LOADING_ATTRIBUTES':
+			return { ...state, loading: true }
+		case 'LOADED_ATTRIBUTES':
+			let newAttr = { ...state.attr }
+			action.payload.map(att => {
+				newAttr[att.attribute_id] = att
+			})
+			return { ...state, attr: newAttr, loading: false }
+		case 'LOADING_ATTRIBUTE_VALUES':
+			return { ...state, loading: true }
+		case 'LOADED_ATTRIBUTE_VALUES':
+			return { ...state, attributeValues: action.payload, loading: false }
 		case 'LOADING_PRODUCT_CATEGORIES':
 			return { ...state, loading: true }
 		case 'LOADED_PRODUCT_CATEGORIES':
