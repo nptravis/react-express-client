@@ -8,6 +8,7 @@ import Navbar from './containers/Navbar'
 import Footer from './containers/Footer'
 import Homepage from './containers/Homepage'
 import ProductIndex from './containers/ProductIndex'
+import ProductShow from './containers/ProductShow'
 import { withRouter } from 'react-router-dom'
 import { docColors } from './constants'
 
@@ -43,6 +44,7 @@ class App extends Component {
         <main>
           <Route exact={true} path="/" component={Homepage} />
           <Route exact={true} path="/product-index" component={ProductIndex} />
+          <Route exact={true} path="/product/:id" component={ProductShow} />
         </main>
         <footer>
           <Route path="/" component={Footer} />

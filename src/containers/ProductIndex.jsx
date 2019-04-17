@@ -10,7 +10,8 @@ import {
 	getAttributes,
 	getProductAttributes,
 	getAttributeValues,
-	getCategories
+	getCategories,
+	getProducts
 } from '../actions/resourceActions'
 
 const Container = styled.div`
@@ -43,6 +44,7 @@ class ProductIndex extends React.Component {
 		this.props.dispatch(getProductAttributes())
 		this.props.dispatch(getAttributeValues())
 		this.props.dispatch(getCategories())
+		this.props.dispatch(getProducts())
 	}
 
 	handleClickNumber = e => {

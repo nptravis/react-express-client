@@ -10,6 +10,10 @@ export const LargeButton = styled.div`
 	border-radius: 20px;
 	height: 30px;
 	text-align: center;
+	display: inline-block;
+	&:hover {
+		cursor: pointer;
+	}
 
 	& > h4 {
 		line-height: 30px;
@@ -17,9 +21,5 @@ export const LargeButton = styled.div`
 		padding: 0;
 		color: #fff;
 		vertical-align: bottom;
-
-		&:hover {
-			cursor: pointer;
-		}
 	}
 `
