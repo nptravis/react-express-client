@@ -48,7 +48,8 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.0.3"
+    "styled-components": "^4.0.3",
+    "uniqid": "^5.0.3"
   },
   "eslintConfig": {
     "extends": "react-app"

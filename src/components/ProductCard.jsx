@@ -7,6 +7,8 @@ import { LargeButton } from './ComponentLibrary'
 import { getSizesByProduct, getColorsByProduct } from '../selectors'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
+import { addToCart } from '../actions/cartActions'
+import uniqid from 'uniqid'
 
 const Container = styled.div`
 	display: flex;
@@ -80,9 +82,34 @@ const Button = styled(LargeButton)`
 `
 
 class ProductCard extends React.Component {
-	state = {
-		color: '',
-		size: ''
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			colors: [],
+			sizes: [],
+			color: '',
+			size: ''
+		}
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		const colors = getColorsByProduct(
+			props.product.product_id,
+			props.productAttributes,
+			props.attribute_values
+		)
+		const sizes = getSizesByProduct(
+			props.product.product_id,
+			props.productAttributes,
+			props.attribute_values
+		)
+		return {
+			colors: colors,
+			sizes: sizes,
+			color: colors[0].value,
+			size: sizes[0].value
+		}
 	}
 
 	handleChange = e => {
@@ -97,6 +124,14 @@ class ProductCard extends React.Component {
 
 	handleAddToCart = e => {
 		e.stopPropagation()
+		const item = {
+			id: uniqid(),
+			product_id: this.props.product.product_id,
+			size: this.state.size,
+			color: this.state.color,
+			quantity: 1
+		}
+		this.props.dispatch(addToCart(item))
 	}
 
 	render() {
@@ -104,21 +139,6 @@ class ProductCard extends React.Component {
 		let price =
 			product.discounted_price > 0 ? product.discounted_price : product.price
 		let originalPrice = product.discounted_price > 0 ? product.price : null
-		let colors = []
-		let sizes = []
-
-		if (!this.props.loading) {
-			colors = getColorsByProduct(
-				product.product_id,
-				this.props.productAttributes,
-				this.props.attribute_values
-			)
-			sizes = getSizesByProduct(
-				product.product_id,
-				this.props.productAttributes,
-				this.props.attribute_values
-			)
-		}
 
 		return (
 			<Container>
@@ -134,7 +154,7 @@ class ProductCard extends React.Component {
 							name="size"
 							onChange={this.handleChange}
 						>
-							{sizes.map(size => {
+							{this.state.sizes.map(size => {
 								return <option key={size.value}>{size.value}</option>
 							})}
 						</select>
@@ -143,7 +163,7 @@ class ProductCard extends React.Component {
 							name="color"
 							onChange={this.handleChange}
 						>
-							{colors.map(color => {
+							{this.state.colors.map(color => {
 								return <option key={color.value}>{color.value}</option>
 							})}
 						</select>

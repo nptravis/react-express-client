@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { getAll } from '../selectors'
-import { getCategories } from '../actions/resourceActions'
 import Button from 'react-bootstrap/Button'
 import { textColors, docColors } from '../constants'
-import { LargeButton } from './ComponentLibrary'
+import SideBarCart from './SideBarCart'
 
 const Container = styled.div`
 	display: flex;
@@ -37,6 +36,10 @@ const Child = styled.div`
 		margin-top: 20px;
 	}
 
+	&:nth-child(4) {
+		margin-top: 20px;
+	}
+
 	& > input {
 		width: 90%;
 		margin-top: 5%;
@@ -61,10 +64,6 @@ class SearchProducts extends Component {
 		selectedDepartmentId: null,
 		selectedCategoryId: null,
 		categories: []
-	}
-
-	componentDidMount() {
-		this.props.dispatch(getCategories())
 	}
 
 	handleDeptClick = e => {
@@ -172,6 +171,9 @@ class SearchProducts extends Component {
 							</button>
 						)
 					})}
+				</Child>
+				<Child>
+					<SideBarCart />
 				</Child>
 			</Container>
 		)

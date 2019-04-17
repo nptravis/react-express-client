@@ -123,18 +123,19 @@ class ProductIndex extends React.Component {
 	}
 
 	render() {
-		const rangeOfProducts = [0, 9]
+		let currentRange = []
+		if (!this.props.loading) {
+			currentRange = this.state.products.slice(
+				this.state.currentRange[0],
+				this.state.currentRange[1]
+			)
+		}
 
-		const currentRange = this.state.products.slice(
-			this.state.currentRange[0],
-			this.state.currentRange[1]
-		)
 		return (
 			<Container>
 				<Child>
 					<SearchProducts filterProducts={this.filterProducts} />
 				</Child>
-
 				<Child>
 					<ProductPagination
 						total={this.state.products.length}
@@ -162,7 +163,8 @@ const mapState = state => {
 		products: getAll(state.resourceData.products),
 		departments: getAll(state.resourceData.departments),
 		categories: getAll(state.resourceData.categories),
-		productCategories: state.resourceData.productCategories
+		productCategories: state.resourceData.productCategories,
+		loading: state.resourceData.loading
 	}
 }
 
