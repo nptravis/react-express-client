@@ -13,20 +13,19 @@ import { withRouter } from 'react-router-dom'
 import { docColors } from './constants'
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
   padding: 10px;
   background-color: ${docColors.lightGrey};
-  height: 100%;
+  min-height: 100vh;
 
   & > header {
-    flex: 1 1 10%;
+    min-height: 10%;
   }
   & > main {
-    flex: 1 1 70%;
+    min-height: 80%;
   }
   & > footer {
-    flex: 1 1 20%;
+    text-align: center;
+    min-height: 10%;
   }
 `
 class App extends Component {

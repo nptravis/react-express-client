@@ -7,7 +7,7 @@ import { LargeButton } from './ComponentLibrary'
 import { getSizesByProduct, getColorsByProduct } from '../selectors'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, incrementItemInCart } from '../actions/cartActions'
 import uniqid from 'uniqid'
 
 const Container = styled.div`
@@ -124,14 +124,29 @@ class ProductCard extends React.Component {
 
 	handleAddToCart = e => {
 		e.stopPropagation()
-		const item = {
-			id: uniqid(),
-			product_id: this.props.product.product_id,
-			size: this.state.size,
-			color: this.state.color,
-			quantity: 1
+
+		let possibleDuplicate = this.props.cart.find(
+			item => item.product_id === this.props.product.product_id
+		)
+		if (possibleDuplicate) {
+			if (
+				possibleDuplicate.size === this.state.size &&
+				possibleDuplicate.color === this.state.color
+			) {
+				debugger
+				this.props.dispatch(incrementItemInCart(possibleDuplicate.id))
+			}
+		} else {
+			const item = {
+				id: uniqid(),
+				product_id: this.props.product.product_id,
+				name: this.props.product.name,
+				size: this.state.size,
+				color: this.state.color,
+				quantity: 1
+			}
+			this.props.dispatch(addToCart(item))
 		}
-		this.props.dispatch(addToCart(item))
 	}
 
 	render() {
@@ -194,7 +209,8 @@ const mapState = state => {
 		attributes: state.resourceData.attr,
 		productAttributes: state.resourceData.productAttributes,
 		attribute_values: state.resourceData.attributeValues,
-		loading: state.resourceData.loading
+		loading: state.resourceData.loading,
+		cart: state.userData.cart
 	}
 }
 

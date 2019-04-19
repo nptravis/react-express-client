@@ -3,8 +3,15 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import SmallCartItem from './SmallCartItem'
 import { removeFromCart } from '../actions/cartActions'
+import { textColors } from '../constants'
 
 const Container = styled.div`
+	text-align: left;
+
+	& > h2 {
+		color: ${textColors.grey};
+		margin-left: 5%;
+	}
 	& > ul {
 		list-style: none;
 		padding: 0;
@@ -18,8 +25,12 @@ class SideBarCart extends Component {
 	}
 
 	render() {
+		let display
+		this.props.cart.length > 0 ? (display = 'block') : (display = 'none')
+
 		return (
-			<Container>
+			<Container style={{ display: display }}>
+				<h2>Cart</h2>
 				<ul>
 					{this.props.cart.map(item => {
 						return (
@@ -36,7 +47,8 @@ class SideBarCart extends Component {
 
 const mapState = state => {
 	return {
-		cart: state.userData.cart
+		cart: state.userData.cart,
+		loading: state.resourceData.loading
 	}
 }
 

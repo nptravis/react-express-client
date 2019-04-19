@@ -10,6 +10,7 @@ const Container = styled.div`
 	background-color: ${docColors.lightGrey};
 	width: 90%;
 	margin: 5px auto;
+	padding: 5px;
 `
 
 const Child = styled.div`
@@ -26,29 +27,26 @@ const Child = styled.div`
 	}
 `
 
-class SmallCartItem extends Component {
-	render() {
-		const product = this.props.products[this.props.item.product_id]
-		return (
-			<Container>
-				<Child>
-					<span
-						data-id={this.props.item.id}
-						onClick={() => this.props.handleRemove(this.props.item.id)}
-					>
-						X
-					</span>
-				</Child>
-				<Child>box2</Child>
-			</Container>
-		)
-	}
+const SmallCartItem = props => {
+	return (
+		<Container>
+			<Child>
+				<span
+					data-id={props.item.id}
+					onClick={() => props.handleRemove(props.item.id)}
+				>
+					X
+				</span>
+			</Child>
+			<Child>
+				<h3>
+					{props.item.quantity} x {props.item.name}
+				</h3>
+				<p>Size: {props.item.size}</p>
+				<p>Color: {props.item.color}</p>
+			</Child>
+		</Container>
+	)
 }
 
-const mapState = state => {
-	return {
-		products: state.resourceData.products
-	}
-}
-
-export default connect(mapState)(SmallCartItem)
+export default SmallCartItem

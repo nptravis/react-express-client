@@ -11,3 +11,9 @@ export function removeFromCart(itemId) {
 		dispatch({ type: 'REMOVED_ITEM_FROM_CART', payload: itemId })
 	}
 }
+
+export function incrementItemInCart(itemId) {
+	return function(dispatch) {
+		dispatch({ type: 'UPDATE_ITEM_IN_CART', payload: itemId })
+	}
+}
