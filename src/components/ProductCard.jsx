@@ -88,8 +88,8 @@ class ProductCard extends React.Component {
 		this.state = {
 			colors: [],
 			sizes: [],
-			color: '',
-			size: ''
+			color: 'White',
+			size: 'S'
 		}
 	}
 
@@ -106,9 +106,7 @@ class ProductCard extends React.Component {
 		)
 		return {
 			colors: colors,
-			sizes: sizes,
-			color: colors[0].value,
-			size: sizes[0].value
+			sizes: sizes
 		}
 	}
 
@@ -125,17 +123,15 @@ class ProductCard extends React.Component {
 	handleAddToCart = e => {
 		e.stopPropagation()
 
-		let possibleDuplicate = this.props.cart.find(
-			item => item.product_id === this.props.product.product_id
+		const duplicate = this.props.cart.find(
+			item =>
+				item.product_id === this.props.product.product_id &&
+				item.size === this.state.size &&
+				item.color === this.state.color
 		)
-		if (possibleDuplicate) {
-			if (
-				possibleDuplicate.size === this.state.size &&
-				possibleDuplicate.color === this.state.color
-			) {
-				debugger
-				this.props.dispatch(incrementItemInCart(possibleDuplicate.id))
-			}
+
+		if (duplicate) {
+			this.props.dispatch(incrementItemInCart(duplicate.id))
 		} else {
 			const item = {
 				id: uniqid(),
