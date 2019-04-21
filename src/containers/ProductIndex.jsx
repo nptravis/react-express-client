@@ -44,7 +44,51 @@ class ProductIndex extends React.Component {
 		this.props.dispatch(getProductAttributes())
 		this.props.dispatch(getAttributeValues())
 		this.props.dispatch(getCategories())
-		this.props.dispatch(getProducts())
+	}
+
+	renderLoading() {
+		return <div>Loading...</div>
+	}
+
+	renderIndex() {
+		let products = this.props.products
+		if (this.state.products.length > 0) {
+			products = this.state.products
+		}
+
+		const currentRange = products.slice(
+			this.state.currentRange[0],
+			this.state.currentRange[1]
+		)
+
+		return (
+			<Container>
+				<Child>
+					<SearchProducts filterProducts={this.filterProducts} />
+				</Child>
+				<Child>
+					<ProductPagination
+						total={products.length}
+						productsPerPage={this.state.productsPerPage}
+						handleClickNumber={this.handleClickNumber}
+						handleNextPage={this.handleNextPage}
+						handlePreviousPage={this.handlePreviousPage}
+						handleToStart={this.handleToStart}
+						handleToEnd={this.handleToEnd}
+						currentRange={this.state.currentRange}
+					/>
+					<div>
+						{currentRange.map(product => {
+							return <ProductCard product={product} key={product.product_id} />
+						})}
+					</div>
+				</Child>
+			</Container>
+		)
+	}
+
+	renderError() {
+		return <div>Opps, try again</div>
 	}
 
 	handleClickNumber = e => {
@@ -123,38 +167,13 @@ class ProductIndex extends React.Component {
 	}
 
 	render() {
-		let currentRange = []
-		if (!this.props.loading) {
-			currentRange = this.state.products.slice(
-				this.state.currentRange[0],
-				this.state.currentRange[1]
-			)
+		if (this.props.loading) {
+			return this.renderLoading()
+		} else if (this.props.products.length > 0) {
+			return this.renderIndex()
+		} else {
+			return this.renderError()
 		}
-
-		return (
-			<Container>
-				<Child>
-					<SearchProducts filterProducts={this.filterProducts} />
-				</Child>
-				<Child>
-					<ProductPagination
-						total={this.state.products.length}
-						productsPerPage={this.state.productsPerPage}
-						handleClickNumber={this.handleClickNumber}
-						handleNextPage={this.handleNextPage}
-						handlePreviousPage={this.handlePreviousPage}
-						handleToStart={this.handleToStart}
-						handleToEnd={this.handleToEnd}
-						currentRange={this.state.currentRange}
-					/>
-					<div>
-						{currentRange.map(product => {
-							return <ProductCard product={product} key={product.product_id} />
-						})}
-					</div>
-				</Child>
-			</Container>
-		)
 	}
 }
 

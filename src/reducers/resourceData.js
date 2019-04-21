@@ -22,7 +22,7 @@ export default function resourceData(
 		case 'LOADING_PRODUCT_ATTRIBUTES':
 			return { ...state, loading: true }
 		case 'LOADED_PRODUCT_ATTRIBUTES':
-			return { ...state, productAttributes: action.payload }
+			return { ...state, productAttributes: action.payload, loading: false }
 		case 'LOADING_ATTRIBUTES':
 			return { ...state, loading: true }
 		case 'LOADED_ATTRIBUTES':
@@ -30,15 +30,15 @@ export default function resourceData(
 			action.payload.map(att => {
 				newAttr[att.attribute_id] = att
 			})
-			return { ...state, attr: newAttr }
+			return { ...state, attr: newAttr, loading: false }
 		case 'LOADING_ATTRIBUTE_VALUES':
 			return { ...state, loading: true }
 		case 'LOADED_ATTRIBUTE_VALUES':
-			return { ...state, attributeValues: action.payload }
+			return { ...state, attributeValues: action.payload, loading: false }
 		case 'LOADING_PRODUCT_CATEGORIES':
 			return { ...state, loading: true }
 		case 'LOADED_PRODUCT_CATEGORIES':
-			return { ...state, productCategories: action.payload }
+			return { ...state, productCategories: action.payload, loading: false }
 		case 'LOADING_DEPARTMENTS':
 			return { ...state, loading: true }
 		case 'LOADED_DEPARTMENTS':
@@ -46,7 +46,7 @@ export default function resourceData(
 			action.payload.map(dept => {
 				newDepartments[dept.department_id] = dept
 			})
-			return { ...state, departments: newDepartments }
+			return { ...state, departments: newDepartments, loading: false }
 		case 'LOADING_CATEGORIES':
 			return { ...state, loading: true }
 		case 'LOADED_CATEGORIES':
@@ -55,7 +55,7 @@ export default function resourceData(
 				newCats[cat.category_id] = cat
 			})
 
-			return { ...state, categories: newCats }
+			return { ...state, categories: newCats, loading: false }
 		default:
 			return state
 	}

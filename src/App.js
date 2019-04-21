@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import './App.css'
-import { getProducts, getProductCategories } from './actions/resourceActions'
+import {
+  getProducts,
+  getProductCategories,
+  getDepartments,
+  getAttributes,
+  getProductAttributes,
+  getCategories,
+  getAttributeValues
+} from './actions/resourceActions'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
@@ -22,6 +30,8 @@ const Container = styled.div`
   }
   & > main {
     min-height: 80%;
+    width: 95%;
+    margin: 0 auto;
   }
   & > footer {
     text-align: center;
@@ -30,8 +40,13 @@ const Container = styled.div`
 `
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(getProducts())
     this.props.dispatch(getProductCategories())
+    this.props.dispatch(getDepartments())
+    this.props.dispatch(getAttributes())
+    this.props.dispatch(getProductAttributes())
+    this.props.dispatch(getAttributeValues())
+    this.props.dispatch(getCategories())
+    this.props.dispatch(getProducts())
   }
   render() {
     const isAuthenticated = this.props.session.isAuthenticated

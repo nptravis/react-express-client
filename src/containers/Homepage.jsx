@@ -66,17 +66,15 @@ const Product = styled.img`
 `
 
 class Homepage extends Component {
-	render() {
-		let featuredProduct = null
-		if (!this.props.loading) {
-			featuredProduct = (
-				<Product
-					src={require(`../images/product_images/${
-						this.props.products[1].image
-					}`)}
-				/>
-			)
-		}
+	renderLoading() {
+		return <div>Loading...</div>
+	}
+
+	renderError() {
+		return <div>Oops, try again...</div>
+	}
+
+	renderHomepage() {
 		return (
 			<Container>
 				<Desktop>
@@ -87,7 +85,13 @@ class Homepage extends Component {
 						</div>
 					</Child>
 					<Child>
-						<div>{featuredProduct}</div>
+						<div>
+							<Product
+								src={require(`../images/product_images/${
+									this.props.products[1].image
+								}`)}
+							/>
+						</div>
 						<div>
 							<h4>Something</h4>
 							<Link to="/product-index">
@@ -116,6 +120,15 @@ class Homepage extends Component {
 				</Desktop>
 			</Container>
 		)
+	}
+	render() {
+		if (this.props.loading) {
+			return this.renderLoading()
+		} else if (this.props.products !== {}) {
+			return this.renderHomepage()
+		} else {
+			return this.renderError()
+		}
 	}
 }
 
