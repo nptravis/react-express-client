@@ -4,14 +4,24 @@ import { connect } from 'react-redux'
 import SmallCartItem from './SmallCartItem'
 import { removeFromCart } from '../actions/cartActions'
 import { textColors } from '../constants'
+import { LargeButton } from './ComponentLibrary'
 
 const Container = styled.div`
-	text-align: left;
+	text-align: center;
+	padding-bottom: 5%;
 
-	& > h2 {
+	& > div.price {
+		width: 90%;
+		margin: 0 auto 10px auto;
+		text-align: right;
+	}
+
+	& > div h2 {
+		text-align: left;
 		color: ${textColors.grey};
 		margin-left: 5%;
 	}
+
 	& > ul {
 		list-style: none;
 		padding: 0;
@@ -26,11 +36,24 @@ class SideBarCart extends Component {
 
 	render() {
 		let display
+		let total = null
 		this.props.cart.length > 0 ? (display = 'block') : (display = 'none')
+
+		if (!this.props.loading) {
+			total = this.props.cart
+				.reduce((total, current) => {
+					total +=
+						this.props.products[current.product_id].price * current.quantity
+					return total
+				}, 0)
+				.toFixed(2)
+		}
 
 		return (
 			<Container style={{ display: display }}>
-				<h2>Cart</h2>
+				<div>
+					<h2>Cart</h2>
+				</div>
 				<ul>
 					{this.props.cart.map(item => {
 						return (
@@ -40,6 +63,15 @@ class SideBarCart extends Component {
 						)
 					})}
 				</ul>
+				<div className="price">
+					<h3 style={{ display: 'inline' }}>Total Price:</h3>
+					<h2 style={{ display: 'inline', color: textColors.red }}>
+						{'$' + total}
+					</h2>
+				</div>
+				<LargeButton>
+					<h4>See Details</h4>
+				</LargeButton>
 			</Container>
 		)
 	}
@@ -48,6 +80,7 @@ class SideBarCart extends Component {
 const mapState = state => {
 	return {
 		cart: state.userData.cart,
+		products: state.resourceData.products,
 		loading: state.resourceData.loading
 	}
 }

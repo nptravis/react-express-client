@@ -149,7 +149,8 @@ class ProductCard extends React.Component {
 		let product = this.props.product
 		let price =
 			product.discounted_price > 0 ? product.discounted_price : product.price
-		let originalPrice = product.discounted_price > 0 ? product.price : null
+		let originalPrice =
+			product.discounted_price > 0 ? '$' + product.price : null
 
 		return (
 			<Container>
@@ -188,7 +189,11 @@ class ProductCard extends React.Component {
 				</Child>
 				<Child>
 					<h3>{product.name}</h3>
-					<h2>{price}</h2>
+
+					<h2>
+						<b>{'$' + price}</b>
+					</h2>
+
 					<h4 className="strikeout">{originalPrice}</h4>
 				</Child>
 			</Container>
