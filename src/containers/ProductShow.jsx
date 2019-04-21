@@ -200,10 +200,11 @@ class ProductShow extends React.Component {
 							)
 						})}
 					</FlexDiv>
-
-					<LargeButton>
-						<h4>Add to cart</h4>
-					</LargeButton>
+					<div style={{ textAlign: 'center' }}>
+						<LargeButton>
+							<h4>Add to cart</h4>
+						</LargeButton>
+					</div>
 				</Child>
 			</Container>
 		)

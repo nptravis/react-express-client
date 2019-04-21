@@ -37,13 +37,18 @@ class SideBarCart extends Component {
 	render() {
 		let display
 		let total = null
+
 		this.props.cart.length > 0 ? (display = 'block') : (display = 'none')
 
 		if (!this.props.loading) {
 			total = this.props.cart
 				.reduce((total, current) => {
-					total +=
-						this.props.products[current.product_id].price * current.quantity
+					let product = this.props.products[current.product_id]
+					if (product.discounted_price > 0) {
+						total += product.discounted_price * current.quantity
+					} else {
+						total += product.price * current.quantity
+					}
 					return total
 				}, 0)
 				.toFixed(2)
