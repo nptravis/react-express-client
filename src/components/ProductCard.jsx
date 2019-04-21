@@ -53,6 +53,10 @@ const Overlay = styled.div`
 	flex-direction: column;
 	text-align: center;
 
+	-webkit-box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.75);
+	box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.75);
+
 	& > div:nth-child(1) {
 		display: inline-block;
 		flex: 1;
@@ -157,7 +161,9 @@ class ProductCard extends React.Component {
 				<Overlay className="overlay" onClick={this.handleOverlayClick}>
 					<div>
 						<h2>{product.name}</h2>
-						<h3>{price}</h3>
+						<h2 style={{ color: textColors.red }}>
+							<b>${price}</b>
+						</h2>
 						<h4 className="strikeout">{originalPrice}</h4>
 					</div>
 					<div>
@@ -179,9 +185,11 @@ class ProductCard extends React.Component {
 								return <option key={color.value}>{color.value}</option>
 							})}
 						</select>
-						<Button onClick={this.handleAddToCart}>
-							<h4>Add to cart</h4>
-						</Button>
+						<div>
+							<Button onClick={this.handleAddToCart}>
+								<h4>Add to cart</h4>
+							</Button>
+						</div>
 					</div>
 				</Overlay>
 				<Child>
