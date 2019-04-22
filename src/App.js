@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import {
-  getProducts,
-  getProductCategories,
-  getDepartments,
-  getAttributes,
-  getProductAttributes,
-  getCategories,
-  getAttributeValues
-} from './actions/resourceActions'
+import { getInitialData } from './actions/initialData'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
@@ -40,13 +32,7 @@ const Container = styled.div`
 `
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(getProductCategories())
-    this.props.dispatch(getDepartments())
-    this.props.dispatch(getAttributes())
-    this.props.dispatch(getProductAttributes())
-    this.props.dispatch(getAttributeValues())
-    this.props.dispatch(getCategories())
-    this.props.dispatch(getProducts())
+    this.props.dispatch(getInitialData())
   }
   render() {
     const isAuthenticated = this.props.session.isAuthenticated

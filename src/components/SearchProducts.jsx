@@ -182,8 +182,8 @@ class SearchProducts extends Component {
 
 const mapState = state => {
 	return {
-		departments: getAll(state.resourceData.departments),
-		categories: getAll(state.resourceData.categories)
+		departments: getAll(state.initialData.departments),
+		categories: getAll(state.initialData.categories)
 	}
 }
 

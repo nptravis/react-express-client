@@ -5,14 +5,6 @@ import { getAll } from '../selectors'
 import SearchProducts from '../components/SearchProducts'
 import ProductCard from '../components/ProductCard'
 import { ProductPagination } from '../components/ProductPagination'
-import {
-	getDepartments,
-	getAttributes,
-	getProductAttributes,
-	getAttributeValues,
-	getCategories,
-	getProducts
-} from '../actions/resourceActions'
 
 const Container = styled.div`
 	display: flex;
@@ -36,14 +28,6 @@ class ProductIndex extends React.Component {
 		products: this.props.products,
 		currentRange: [0, 9],
 		productsPerPage: 9
-	}
-
-	componentDidMount() {
-		this.props.dispatch(getDepartments())
-		this.props.dispatch(getAttributes())
-		this.props.dispatch(getProductAttributes())
-		this.props.dispatch(getAttributeValues())
-		this.props.dispatch(getCategories())
 	}
 
 	renderLoading() {
@@ -179,11 +163,11 @@ class ProductIndex extends React.Component {
 
 const mapState = state => {
 	return {
-		products: getAll(state.resourceData.products),
-		departments: getAll(state.resourceData.departments),
-		categories: getAll(state.resourceData.categories),
-		productCategories: state.resourceData.productCategories,
-		loading: state.resourceData.loading
+		products: getAll(state.initialData.products),
+		departments: getAll(state.initialData.departments),
+		categories: getAll(state.initialData.categories),
+		productCategories: state.initialData.product_categories,
+		loading: state.initialData.loading
 	}
 }
 

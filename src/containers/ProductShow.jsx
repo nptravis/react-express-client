@@ -5,6 +5,7 @@ import { docColors, textColors } from '../constants'
 import { Link } from 'react-router-dom'
 import { getColorsByProduct, getSizesByProduct } from '../selectors'
 import { LargeButton } from '../components/ComponentLibrary'
+import { addToCart } from '../actions/cartActions'
 
 const Container = styled.div`
 	display: flex;
@@ -14,6 +15,11 @@ const Container = styled.div`
 `
 
 const Child = styled.div`
+	& > h2,
+	h3 {
+		color: ${textColors.grey};
+	}
+
 	&:nth-child(1) {
 		flex: 1;
 	}
@@ -24,6 +30,19 @@ const Child = styled.div`
 		& > .redText {
 			color: ${textColors.red};
 		}
+
+		& > h2.productName {
+			margin: 15px auto;
+			font-weight: bold;
+		}
+	}
+
+	& > h3 {
+		margin: 20px 0 0 0;
+	}
+
+	& > input.quantityInput {
+		margin: 8px 5px;
 	}
 `
 
@@ -90,7 +109,8 @@ class ProductShow extends React.Component {
 	state = {
 		quantity: 1,
 		size: 'S',
-		color: 'White'
+		color: 'White',
+		product_id: this.props.match.params.id
 	}
 
 	handleIncrement = e => {
@@ -103,6 +123,10 @@ class ProductShow extends React.Component {
 		this.setState({
 			[e.currentTarget.dataset.name]: e.currentTarget.dataset.value
 		})
+	}
+
+	handleAddToCart = e => {
+		this.props.dispatch(addToCart(this.state))
 	}
 
 	renderError() {
@@ -148,25 +172,24 @@ class ProductShow extends React.Component {
 					</OtherImagesContainer>
 				</Child>
 				<Child>
-					<p>
-						<Link to="/product-index">Home</Link> / {name}
-					</p>
-					<h3>{name}</h3>
+					<Link to="/product-index">Home</Link> / {name}
+					<h2 className="productName">{name}</h2>
 					<h2 className="redText">
-						{discounted_price > 0 ? discounted_price : price}{' '}
+						<b>{discounted_price > 0 ? discounted_price : price}</b>
 						<small className="strikeout">
 							{discounted_price > 0 ? price : null}
 						</small>
 					</h2>
-
 					<p>{description}</p>
 					<h3>Quantity</h3>
 					<input
 						type="number"
 						name="quantity"
 						step="1"
+						min="1"
 						value={this.state.quantity}
 						onChange={this.handleIncrement}
+						className="quantityInput"
 					/>
 					<h3>Size</h3>
 					<FlexDiv>
@@ -201,7 +224,7 @@ class ProductShow extends React.Component {
 						})}
 					</FlexDiv>
 					<div style={{ textAlign: 'center' }}>
-						<LargeButton>
+						<LargeButton onClick={this.handleAddToCart}>
 							<h4>Add to cart</h4>
 						</LargeButton>
 					</div>
@@ -222,10 +245,10 @@ class ProductShow extends React.Component {
 
 const mapState = state => {
 	return {
-		products: state.resourceData.products,
-		loading: state.resourceData.loading,
-		product_attributes: state.resourceData.productAttributes,
-		attribute_values: state.resourceData.attributeValues
+		products: state.initialData.products,
+		loading: state.initialData.loading,
+		product_attributes: state.initialData.product_attributes,
+		attribute_values: state.initialData.attribute_values
 	}
 }
 

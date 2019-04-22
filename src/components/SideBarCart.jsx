@@ -85,8 +85,8 @@ class SideBarCart extends Component {
 const mapState = state => {
 	return {
 		cart: state.userData.cart,
-		products: state.resourceData.products,
-		loading: state.resourceData.loading
+		products: state.initialData.products,
+		loading: state.initialData.loading
 	}
 }
 

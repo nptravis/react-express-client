@@ -4,7 +4,7 @@ export function getInitialData() {
 	return function(dispatch) {
 		dispatch({ type: 'FETCH_DATA' })
 
-		return fetch(baseUrl + `/initialData`, {
+		return fetch(baseUrl + `/api/catalog_data`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',

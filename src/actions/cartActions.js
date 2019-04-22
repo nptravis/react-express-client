@@ -1,7 +1,10 @@
+import uniqid from 'uniqid'
+
 export function addToCart(item) {
+	const itemWithId = { ...item, id: uniqid() }
 	return function(dispatch) {
 		dispatch({ type: 'ADDING_ITEM_TO_CART' })
-		dispatch({ type: 'ADDED_ITEM_TO_CART', payload: item })
+		dispatch({ type: 'ADDED_ITEM_TO_CART', payload: itemWithId })
 	}
 }
 
