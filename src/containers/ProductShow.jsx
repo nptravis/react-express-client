@@ -44,6 +44,10 @@ const Child = styled.div`
 	& > input.quantityInput {
 		margin: 8px 5px;
 	}
+
+	& > h2 small.strikeout {
+		margin-left: 20px;
+	}
 `
 
 const MainImageContainer = styled.div`
@@ -172,12 +176,12 @@ class ProductShow extends React.Component {
 					</OtherImagesContainer>
 				</Child>
 				<Child>
-					<Link to="/product-index">Home</Link> / {name}
+					<Link to="/product-index">Home</Link>
 					<h2 className="productName">{name}</h2>
 					<h2 className="redText">
-						<b>{discounted_price > 0 ? discounted_price : price}</b>
+						<b>${discounted_price > 0 ? discounted_price : price}</b>
 						<small className="strikeout">
-							{discounted_price > 0 ? price : null}
+							{discounted_price > 0 ? '$' + price : null}
 						</small>
 					</h2>
 					<p>{description}</p>
