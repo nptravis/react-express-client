@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CartView from '../components/CartView'
+import { removeFromCart } from '../actions/cartActions'
 
 class CartContainer extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {}
-	}
-
-	componentDidMount() {}
-
 	renderLoading() {
 		return <div>Loading...</div>
 	}
 
 	renderView() {
-		return <CartView cart={this.props.cart} />
+		return (
+			<CartView
+				cart={this.props.cart}
+				products={this.props.products}
+				handleDeleteItem={this.handleDeleteItem}
+			/>
+		)
 	}
 
 	renderError() {
@@ -32,12 +31,17 @@ class CartContainer extends Component {
 			return this.renderError()
 		}
 	}
+
+	handleDeleteItem = e => {
+		this.props.dispatch(removeFromCart(e.target.dataset.itemid))
+	}
 }
 
 const mapState = state => {
 	return {
 		loading: state.initialData.loading,
-		cart: state.userData.cart
+		cart: state.userData.cart,
+		products: state.initialData.products
 	}
 }
 

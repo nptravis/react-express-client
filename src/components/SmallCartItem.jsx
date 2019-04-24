@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { docColors, textColors } from '../constants'
 import { connect } from 'react-redux'
+import { DeleteButton } from './ComponentLibrary'
 
 const Container = styled.div`
 	text-align: left;
@@ -13,13 +14,11 @@ const Container = styled.div`
 `
 
 const Child = styled.div`
-	
-	
-	&:nth-child(1){
+	&:nth-child(1) {
 		flex: 3;
 	}
 
-	&:nth-child(2){
+	&:nth-child(2) {
 		flex: 1;
 	}
 
@@ -35,19 +34,6 @@ const Child = styled.div`
 		margin: 0px 5px 2px 5px;
 		padding: 0;
 	}
-
-	& > span {
-		float: right;
-		border: 1px solid black;
-		background-color: #fff;
-		border-radius: 50%;
-		padding: 2px;
-		color: ${textColors.red}
-
-		&:hover {
-			cursor: pointer;
-		}
-	}
 `
 
 const SmallCartItem = props => {
@@ -62,12 +48,12 @@ const SmallCartItem = props => {
 				<h3>Color: {props.item.color}</h3>
 			</Child>
 			<Child>
-				<span
+				<DeleteButton
 					data-id={props.item.id}
 					onClick={() => props.handleRemove(props.item.id)}
 				>
 					X
-				</span>
+				</DeleteButton>
 			</Child>
 		</Container>
 	)

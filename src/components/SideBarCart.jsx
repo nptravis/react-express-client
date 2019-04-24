@@ -89,5 +89,3 @@ const mapState = state => {
 }
 
 export default connect(mapState)(SideBarCart)
-
-// array.reduce(function(total, currentValue, currentIndex, arr), initialValue)

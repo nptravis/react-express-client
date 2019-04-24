@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { docColors } from '../constants'
+import { docColors, textColors } from '../constants'
 
 // large button
 
@@ -22,4 +22,20 @@ export const LargeButton = styled.div`
 		color: #fff;
 		vertical-align: bottom;
 	}
+`
+
+export const DeleteButton = styled.span`
+
+	float: right;
+	border: 1px solid black;
+	background-color: #fff;
+	border-radius: 50%;
+	padding: 2px;
+	color: ${textColors.red}
+
+	&:hover {
+		cursor: pointer;
+	}
+
+
 `
