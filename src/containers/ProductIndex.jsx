@@ -36,6 +36,7 @@ class ProductIndex extends React.Component {
 
 	renderIndex() {
 		let products = this.props.products
+
 		if (this.state.products.length > 0) {
 			products = this.state.products
 		}

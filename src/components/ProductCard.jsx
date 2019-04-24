@@ -126,25 +126,15 @@ class ProductCard extends React.Component {
 	handleAddToCart = e => {
 		e.stopPropagation()
 
-		const duplicate = this.props.cart.find(
-			item =>
-				item.product_id === this.props.product.product_id &&
-				item.size === this.state.size &&
-				item.color === this.state.color
-		)
-
-		if (duplicate) {
-			this.props.dispatch(incrementItemInCart(duplicate.id))
-		} else {
-			const item = {
-				product_id: this.props.product.product_id,
-				name: this.props.product.name,
-				size: this.state.size,
-				color: this.state.color,
-				quantity: 1
-			}
-			this.props.dispatch(addToCart(item))
+		const item = {
+			product_id: this.props.product.product_id,
+			name: this.props.product.name,
+			size: this.state.size,
+			color: this.state.color,
+			quantity: 1
 		}
+
+		this.props.dispatch(addToCart(item, this.props.cart))
 	}
 
 	render() {

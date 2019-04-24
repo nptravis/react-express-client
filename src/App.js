@@ -11,6 +11,7 @@ import ProductIndex from './containers/ProductIndex'
 import ProductShow from './containers/ProductShow'
 import { withRouter } from 'react-router-dom'
 import { docColors } from './constants'
+import CartContainer from './containers/CartContainer'
 
 const Container = styled.div`
   padding: 10px;
@@ -34,7 +35,12 @@ class App extends Component {
   componentDidMount() {
     this.props.dispatch(getInitialData())
   }
-  render() {
+
+  renderLoading() {
+    return <div>Loading...</div>
+  }
+
+  renderApp() {
     const isAuthenticated = this.props.session.isAuthenticated
     return (
       <Container>
@@ -45,6 +51,7 @@ class App extends Component {
           <Route exact={true} path="/" component={Homepage} />
           <Route exact={true} path="/product-index" component={ProductIndex} />
           <Route exact={true} path="/product/:id" component={ProductShow} />
+          <Route exact={true} path="/cart" component={CartContainer} />
         </main>
         <footer>
           <Route path="/" component={Footer} />
@@ -54,11 +61,27 @@ class App extends Component {
       </Container>
     )
   }
+
+  renderError() {
+    return <div>Oops, please try again</div>
+  }
+
+  render() {
+    if (this.props.loading) {
+      return this.renderLoading()
+    } else if (this.props.products[1]) {
+      return this.renderApp()
+    } else {
+      return this.renderError()
+    }
+  }
 }
 
 const mapState = state => {
   return {
-    session: state.sessionData
+    session: state.sessionData,
+    loading: state.initialData.loading,
+    products: state.initialData.products
   }
 }
 
